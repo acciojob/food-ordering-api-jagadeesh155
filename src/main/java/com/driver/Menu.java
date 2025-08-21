@@ -7,20 +7,23 @@ public class Menu {
     private List<Food> menuItems;
 
     public Menu() {
-    	// your code goes here
+        this.menuItems = new ArrayList<>();
     }
 
     public void addMenuItem(Food food) {
-    	// your code goes here
+        menuItems.add(food);
     }
 
     public List<Food> getMenuItems() {
-    	// your code goes here
         return menuItems;
     }
 
     public Food getMenuItemById(int id) {
-    	// your code goes here
-        return null;
+        for (Food food : menuItems) {
+            if (food.getId() == id) {
+                return food;
+            }
+        }
+        return null; // if not found
     }
 }
