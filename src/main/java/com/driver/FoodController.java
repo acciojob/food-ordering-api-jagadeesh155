@@ -15,29 +15,39 @@ public class FoodController {
     private Order currentOrder;
 
     public FoodController() {
-    	// your code goes here
+        this.menu = new Menu();
+        this.currentOrder = new Order();
+
+        // Pre-populate menu
+        menu.addMenuItem(new Food(1, "Pizza", 299.99));
+        menu.addMenuItem(new Food(2, "Burger", 149.49));
+        menu.addMenuItem(new Food(3, "Pasta", 199.00));
+        menu.addMenuItem(new Food(4, "Sandwich", 99.99));
     }
 
     @GetMapping("/menu")
     public List<Food> getMenu() {
-    	// your code goes here
         return menu.getMenuItems();
     }
 
     @PostMapping("/order/{itemId}")
-    public void placeOrder(@PathVariable int itemId) {
-    	// your code goes here
+    public String placeOrder(@PathVariable int itemId) {
+        Food food = menu.getMenuItemById(itemId);
+        if (food != null) {
+            currentOrder.addItem(food);
+            return food.getName() + " added to order!";
+        } else {
+            return "Item not found!";
+        }
     }
 
     @GetMapping("/order")
     public Order getCurrentOrder() {
-    	// your code goes here
         return currentOrder;
     }
 
     @GetMapping("/order/total")
     public double getTotalBill() {
-    	// your code goes here
         return currentOrder.getTotalBill();
     }
 }
